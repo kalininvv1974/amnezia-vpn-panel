@@ -12,6 +12,8 @@
   - Проверки: `embedded == index.html: True` (PANEL_B64 97700), `node --check` OK,
     секреты/хостнеймы не найдены, LF во всех файлах.
 - Опубликовано: `git init` + коммит + релиз на GitHub.
+- **Репозиторий: https://github.com/kalininvv1974/amnezia-vpn-panel** (public, ветка `main`).
+  Теги: vpn, amnezia, amneziawg, vpn-panel, wireguard, nginx, nodejs, wg-easy.
 
 ## RELEASE: финальная проверка пакета (2026-09-23)
 - Пользователь подтвердил: «всё, это релиз». Панель передана в финальном виде.
