@@ -556,16 +556,26 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                 var r = await fetch('/api/geo', { credentials: 'same-origin' });
                 if (r.ok) {
                     var d = await r.json().catch(function() { return null; });
-                    if (d && d.country) return d.country;
+                    if (d && d.country) return d;
                 }
             } catch(e) {}
-            return '';
+            return null;
+        }
+        
+        // Флаг из ISO-кода страны (например "KZ" -> 🇰🇿)
+        function countryFlag(code) {
+            if (!code || !/^[A-Za-z]{2}$/.test(code)) return '';
+            var c = code.toUpperCase();
+            return String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65, 0x1F1E6 + c.charCodeAt(1) - 65);
         }
 
         async function loadServer() {
             try {
                 var s = await api('/server');
-                var region = (await loadGeo()) || serverCountry || s.region || '?';
+                var geo = await loadGeo();
+                var region = (geo && geo.country) || serverCountry || s.region || '?';
+                var flag = countryFlag(geo && geo.code ? geo.code : '');
+                if (flag) region = flag + ' ' + region;
                 var items = [
                     ['Clients', s.totalPeers || 0],
                     ['Max', s.maxPeers || '?'],
