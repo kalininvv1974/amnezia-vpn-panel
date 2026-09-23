@@ -562,28 +562,31 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
             return null;
         }
         
-        // Флаг из ISO-кода страны (например "KZ" -> 🇰🇿)
-        function countryFlag(code) {
+        // Флаг страны из ISO-кода (например "KZ" -> картинка флага Казахстана с flagcdn.com).
+        // Картинка вместо эмодзи: на Windows флаги-эмодзи не рисуются (видны буквы "PL").
+        function flagImg(code) {
             if (!code || !/^[A-Za-z]{2}$/.test(code)) return '';
-            var c = code.toUpperCase();
-            return String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65, 0x1F1E6 + c.charCodeAt(1) - 65);
+            var c = code.toLowerCase();
+            return '<img src="https://flagcdn.com/w24/' + c + '.png" alt="' + code.toUpperCase() + '" ' +
+                'style="vertical-align:middle;margin-right:6px;border-radius:2px;display:inline-block" ' +
+                'onerror="this.style.display=\'none\'" loading="lazy"> ';
         }
 
         async function loadServer() {
             try {
                 var s = await api('/server');
                 var geo = await loadGeo();
-                var region = (geo && geo.country) || serverCountry || s.region || '?';
-                var flag = countryFlag(geo && geo.code ? geo.code : '');
-                if (flag) region = flag + ' ' + region;
+                var country = (geo && geo.country) || serverCountry || s.region || '?';
+                var code = geo && geo.code ? geo.code : '';
+                var flag = flagImg(code);
                 var items = [
-                    ['Clients', s.totalPeers || 0],
-                    ['Max', s.maxPeers || '?'],
-                    ['Location', region],
-                    ['Protocols', (s.protocols || []).join(',')]
+                    { label: 'Clients',   html: false, value: s.totalPeers || 0 },
+                    { label: 'Max',       html: false, value: s.maxPeers || '?' },
+                    { label: 'Location',  html: true,  value: flag + esc(country) },
+                    { label: 'Protocols', html: false, value: (s.protocols || []).join(',') }
                 ];
                 els.infoGrid.innerHTML = items.map(function(i) {
-                    return '<div class="info-item"><div class="info-value">' + esc(i[1]) + '</div><div class="info-label">' + esc(i[0]) + '</div></div>';
+                    return '<div class="info-item"><div class="info-value">' + (i.html ? i.value : esc(i.value)) + '</div><div class="info-label">' + esc(i.label) + '</div></div>';
                 }).join('');
                 els.serverCard.style.display = 'block';
                 els.mainSection.style.display = 'block';
