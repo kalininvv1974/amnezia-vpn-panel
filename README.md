@@ -16,6 +16,12 @@ A web management panel for **AmneziaVPN / AmneziaWG** with an in-panel login for
 - 🌙 Dark/light theme with a toggle in the header
 - 🌍 Server card: number of clients, location (GeoIP country), protocols
 
+## Screenshots
+
+| Dark theme | Light theme |
+|---|---|
+| ![Panel dark theme](docs/screenshots/panel-dark.png) | ![Panel light theme](docs/screenshots/panel-light.png) |
+
 ## Install on a clean Ubuntu/Debian server
 
 **Quick way — one command (on the server, as root):**
