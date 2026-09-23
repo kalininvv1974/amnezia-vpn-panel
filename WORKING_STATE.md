@@ -1,5 +1,19 @@
 # Working State - 2026-08-31 (updated 2026-09-23)
 
+## GitHub: README-языки, скриншоты и Release v2.1 (2026-09-23)
+- README на двух языках: английский стал основным `README.md`, русский — `README.ru.md`
+  (история сохранена через `git mv`; переключатель языка в шапке обоих файлов).
+- Скриншоты панели (тёмная/светлая тема, 1320x880) добавлены в `docs/screenshots/`:
+  сделаны headless Edge по локальному мок-серверу (временный `mock_panel.js` с
+  демо-клиентами, не коммитится); в README обеих версий добавлена секция «Скриншоты».
+  Проверка изображения моделью недоступна — проверялось программно: PNG 1320x880,
+  `--dump-dom` подтвердил `data-theme="dark"`/`light`, все 5 мок-клиентов, футер.
+- **GitHub Release v2.1** создан: https://github.com/kalininvv1974/amnezia-vpn-panel/releases/tag/v2.1
+  (прикреплены `install-amnezia-panel.sh` и `uninstall-amnezia-panel.sh`).
+- Репозиторий отмечен звёздочкой (HTTP 204) от аккаунта kalininvv1974.
+- Коммиты: `76e2bac` (README.en.md), `3d0d958` (eng main README + README.ru.md),
+  `e6055da` (скриншоты в README).
+
 ## GitHub: подготовка публичного релиза (2026-09-23)
 - Репозиторий: **amnezia-vpn-panel**, public. Проект подготовлен к публикации:
   - **API-ключ**: убран встроенный дефолтный ключ — при Enter установщик теперь
