@@ -27,7 +27,7 @@ A web management panel for **AmneziaVPN / AmneziaWG** with an in-panel login for
 
 | Dark theme | Light theme |
 |---|---|
-| ![Panel dark theme](docs/screenshots/panel-dark.png) | ![Panel light theme](docs/screenshots/panel-light.png) |
+| ![Panel dark theme](docs/screenshots/panel-dark-v2.png) | ![Panel light theme](docs/screenshots/panel-light-v2.png) |
 
 ## Install on a clean Ubuntu/Debian server
 

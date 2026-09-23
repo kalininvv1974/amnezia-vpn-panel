@@ -27,7 +27,7 @@
 
 | Тёмная тема | Светлая тема |
 |---|---|
-| ![Панель, тёмная тема](docs/screenshots/panel-dark.png) | ![Панель, светлая тема](docs/screenshots/panel-light.png) |
+| ![Панель, тёмная тема](docs/screenshots/panel-dark-v2.png) | ![Панель, светлая тема](docs/screenshots/panel-light-v2.png) |
 
 ## Установка на чистый Ubuntu/Debian сервер
 
