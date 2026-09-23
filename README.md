@@ -16,6 +16,22 @@
 
 ## Установка на чистый Ubuntu/Debian сервер
 
+**Быстрый способ — одной командой (с сервера, под root):**
+
+```bash
+wget -O install.sh https://raw.githubusercontent.com/kalininvv1974/amnezia-vpn-panel/main/install-amnezia-panel.sh
+bash install.sh
+```
+
+Если `wget` не установлен — через `curl`:
+
+```bash
+curl -fsSL -o install.sh https://raw.githubusercontent.com/kalininvv1974/amnezia-vpn-panel/main/install-amnezia-panel.sh
+bash install.sh
+```
+
+**Классический способ — загрузить скрипт со своего ПК по scp:**
+
 ```bash
 # 1. Загрузить скрипт на сервер
 scp install-amnezia-panel.sh root@YOUR_IP:/root/
