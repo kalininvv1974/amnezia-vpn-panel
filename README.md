@@ -7,7 +7,7 @@
 
 🌐 **Русский** — [README.ru.md](README.ru.md) · **English**
 
-A web management panel for **AmneziaVPN / AmneziaWG 3.x** with an in-panel login form (username/password), client list, live traffic, QR codes and `.conf` download. wg-easy style UI, runs on nginx + Node.js.
+A web management panel for **AmneziaVPN / AmneziaWG** with an in-panel login form (username/password), client list, live traffic, QR codes and `.conf` download. wg-easy style UI, runs on nginx + Node.js.
 
 > ⚠️ This panel does **not** install AmneziaVPN. Install AmneziaVPN with its own installer first (the `amnezia-awg*` container must be running), then use this panel as a convenient web interface to manage it.
 
