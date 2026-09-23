@@ -1,5 +1,17 @@
 # Working State - 2026-08-31 (updated 2026-09-23)
 
+## License: CC BY-NC-SA → MIT (2026-09-23)
+- По решению пользователя (против «продажи» он не возражает, но хочет попасть в каталоги
+  и убрать барьеры) лицензия сменена на **MIT**:
+  - `LICENSE` — официальный текст MIT, Copyright (c) 2026 Kalinin Vitaliy;
+  - футер панели: «…is licensed under the MIT License», ссылка opensource.org/licenses/MIT;
+  - `README.md` (EN) и `README.ru.md` — секция лицензии обновлены;
+  - `PANEL_B64` в установщике пересобран: `embedded == index.html: True`
+    (97680 символов, декод 73260 байт), LF сохранён (CRLF=0), токены PLACEHOLDER /
+    __SERVER_COUNTRY__ на месте, «Donate» нет;
+  - GitHub Release v2.1 — заметки обновлены на MIT (см. ниже).
+- Коммит: `—` (см. git log).
+
 ## GitHub: README-языки, скриншоты и Release v2.1 (2026-09-23)
 - README на двух языках: английский стал основным `README.md`, русский — `README.ru.md`
   (история сохранена через `git mv`; переключатель языка в шапке обоих файлов).

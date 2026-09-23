@@ -164,7 +164,7 @@ The script removes the panel, the API and the panel settings in nginx; it does *
 
 ## License
 
-© 2026 Kalinin Vitaliy. **Amnezia VPN Panel** is licensed under [CC BY‑NC‑SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+© 2026 Kalinin Vitaliy. **Amnezia VPN Panel** is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 Bundled components keep their own licenses:
 - QR code library (in `index.html`) — Kazuhiko Arase, MIT

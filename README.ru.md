@@ -164,7 +164,7 @@ bash uninstall-amnezia-panel.sh
 
 ## Лицензия
 
-© 2026 Kalinin Vitaliy. **Amnezia VPN Panel** распространяется под лицензией [CC BY‑NC‑SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+© 2026 Kalinin Vitaliy. **Amnezia VPN Panel** распространяется под лицензией [MIT License](https://opensource.org/licenses/MIT).
 
 Встроенные компоненты сохраняют собственные лицензии:
 - QR‑код библиотека (в `index.html`) — Kazuhiko Arase, MIT
