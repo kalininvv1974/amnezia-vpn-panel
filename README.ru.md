@@ -1,5 +1,10 @@
 # Amnezia VPN Panel
 
+[![License: MIT](https://img.shields.io/github/license/kalininvv1974/amnezia-vpn-panel)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/kalininvv1974/amnezia-vpn-panel?include_prereleases)](https://github.com/kalininvv1974/amnezia-vpn-panel/releases)
+[![Stars](https://img.shields.io/github/stars/kalininvv1974/amnezia-vpn-panel?style=social)](https://github.com/kalininvv1974/amnezia-vpn-panel/stargazers)
+[![Platform](https://img.shields.io/badge/platform-Ubuntu%20%7C%20Debian-2ea44f)](#установка-на-чистый-ubuntudebian-сервер)
+
 🌐 **English** — [README.md](README.md)
 
 Веб-панель управления для **AmneziaVPN / AmneziaWG** с входом по форме (логин/пароль), списком клиентов, трафиком, QR‑кодами и скачиванием `.conf`. Дизайн — в стиле wg‑easy, работает на nginx + Node.js.
