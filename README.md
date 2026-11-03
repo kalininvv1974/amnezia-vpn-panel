@@ -18,7 +18,7 @@ A web management panel for **AmneziaVPN / AmneziaWG** with an in-panel login for
 - 🔐 **Login form inside the panel** (session cookie, PBKDF2) — no browser Basic Auth popup; the password is asked again each time the browser is reopened
 - 📋 Client list: IP, status (Online/Offline/Disabled), download/upload speed and total traffic
 - ➕ One-click client creation + automatic `amnezia-<name>.conf` download
-- 📱 QR code of the config for the Amnezia app
+- 📱 QR code of the config for the Amnezia app — available from any authorized device
 - 🔌 Toggle clients on/off with a switch, delete clients
 - 🌙 Dark/light theme with a toggle in the header
 - 🌍 Server card: number of clients, location (GeoIP country), protocols
@@ -76,6 +76,7 @@ bash install-amnezia-panel.sh
 - Node.js 20
 - `amnezia-api` (cloned from GitHub) — Node/Fastify, **systemd service** `amnezia-api.service`, listens on `127.0.0.1:4001` (externally reachable only through nginx)
 - `amnezia-panel-auth` — a small auth service (**systemd**, `127.0.0.1:4002`): checks login/password (PBKDF2) and issues a session cookie
+- Client `vpn://` configurations are stored in `/etc/amnezia-panel/client-configs.json` (mode `600`) so QR codes and `.conf` downloads work from other authorized browsers/devices
 - Nginx — serves the panel on port 80 with the **login form inside the panel** and proxies `/api` (API access only with a valid session via `auth_request`)
 - The `amnezia-awg*` (AmneziaWG) container is **not created or modified** — the script only copies `awg0.conf` and keys from the already running container
 
@@ -94,6 +95,24 @@ http://YOUR_IP/api/docs
 
 > The panel talks to the API via the `x-api-key` header on its own — you don't need to type it on every login.
 
+## Updating an existing installation
+
+Download and run the current installer from GitHub:
+
+```bash
+wget -O install.sh https://raw.githubusercontent.com/kalininvv1974/amnezia-vpn-panel/main/install-amnezia-panel.sh
+bash install.sh
+```
+
+The installer updates the panel, auth service and nginx configuration. The existing
+`/etc/amnezia-panel/client-configs.json` is preserved. To keep the current panel
+password, enter the same password when prompted (or save the newly generated one).
+
+Clients created before server-side config storage may still have their `vpn://` URL
+only in the browser that created them. Open their QR or Config button once in that
+original browser to migrate the URL to the server; after that it is available from
+other authorized devices too. New clients are stored on the server automatically.
+
 ## Servers with ispmanager (hosting panel)
 If the server already runs ispmanager with its own sites:
 - the panel lives in the shared nginx (as a regular `panel` vhost) — default server on port 80, login form inside the panel (session cookie). Sites on their own domains are not affected;
@@ -103,7 +122,7 @@ If the server already runs ispmanager with its own sites:
 ## Files
 - `install-amnezia-panel.sh` — installer (the panel is embedded in it as base64)
 - `index.html` — panel source (for development; the installer uses the embedded version)
-- `uninstall-amnezia-panel.sh` — removes the panel/API and panel settings from nginx (does not touch nginx itself)
+- `uninstall-amnezia-panel.sh` — removes the panel/API, auth data and stored client configs, plus panel settings from nginx (does not touch nginx itself)
 
 ## Troubleshooting
 
@@ -167,7 +186,7 @@ sed -i "s|old_key|new_key|g" /var/www/html/index.html
 ```bash
 bash uninstall-amnezia-panel.sh
 ```
-The script removes the panel, the API and the panel settings in nginx; it does **not** touch the AmneziaVPN container.
+The script removes the panel, the API, auth data and stored client configs; it does **not** touch the AmneziaVPN container or nginx itself.
 
 ## License
 

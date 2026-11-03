@@ -33,6 +33,7 @@ echo "[2/5] Удаление файлов amnezia-api и panel-auth..."
 rm -rf /opt/amnezia-api
 rm -rf /opt/amnezia/panel-auth
 rm -f /etc/amnezia-panel/auth.json
+rm -f /etc/amnezia-panel/client-configs.json
 rmdir /etc/amnezia-panel 2>/dev/null || true
 rm -f /usr/local/bin/amnezia-api-start.sh
 rm -f /var/log/amnezia-api.log
