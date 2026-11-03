@@ -796,8 +796,9 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                     body: JSON.stringify({ clientName: name, protocol: 'amneziawg3' })
                 });
                 var vpnUrl = d.client.config;
-                // Store for later use (use name, not id — getStoredVpnUrl looks up by username)
+                // Store locally and on the server, so QR works from another browser/device.
                 try { localStorage.setItem('vpn_' + name, vpnUrl); } catch(e) {}
+                saveServerConfig(name, vpnUrl);
                 
                 // Auto-download .conf
                 vpnToConf(vpnUrl).then(function(conf) {
@@ -830,13 +831,39 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                     body: JSON.stringify({ clientId: id, protocol: 'amneziawg3' })
                 });
                 try { localStorage.removeItem('vpn_' + name); } catch(e) {}
+                deleteServerConfig(name);
                 msg('Deleted', 'success');
                 loadClients();
             } catch(e) { msg(e.message, 'error'); }
         }
         
-        function getStoredVpnUrl(name) {
-            try { return localStorage.getItem('vpn_' + name); } catch(e) { return null; }
+        async function getStoredVpnUrl(name) {
+            try {
+                var r = await fetch('/api/config?name=' + encodeURIComponent(name), { credentials: 'same-origin' });
+                if (r.ok) {
+                    var d = await r.json();
+                    if (d && d.config) return d.config;
+                }
+            } catch(e) {}
+            try {
+                var local = localStorage.getItem('vpn_' + name);
+                if (local) saveServerConfig(name, local); // migrate old browser-only configs
+                return local;
+            } catch(e) { return null; }
+        }
+
+        function saveServerConfig(name, config) {
+            fetch('/api/config', {
+                method: 'POST', credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, config: config })
+            }).catch(function(e) { console.warn('Could not save config on server:', e); });
+        }
+
+        function deleteServerConfig(name) {
+            fetch('/api/config?name=' + encodeURIComponent(name), {
+                method: 'DELETE', credentials: 'same-origin'
+            }).catch(function(e) { console.warn('Could not delete server config:', e); });
         }
         
         function getPeerId(name) {
@@ -844,8 +871,8 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
             return row ? row.dataset.peerId : name;
         }
 
-        function downloadConfig(id, name) {
-            var vpnUrl = getStoredVpnUrl(id);
+        async function downloadConfig(id, name) {
+            var vpnUrl = await getStoredVpnUrl(id);
             if (!vpnUrl) {
                 if (confirm('No config stored for "' + name + '".\n\nDelete this client and create a new one with the same name?\n\nThis will generate a new config with a new key.')) {
                     recreateClient(getPeerId(name), name);
@@ -860,8 +887,8 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
             });
         }
 
-        function showQr(id, name) {
-            var vpnUrl = getStoredVpnUrl(id);
+        async function showQr(id, name) {
+            var vpnUrl = await getStoredVpnUrl(id);
             if (!vpnUrl) {
                 if (confirm('No vpn:// URL stored for "' + name + '".\n\nDelete this client and create a new one with the same name?')) {
                     recreateClient(getPeerId(name), name);
@@ -922,6 +949,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
                 });
                 var vpnUrl = d.client.config;
                 try { localStorage.setItem('vpn_' + name, vpnUrl); } catch(e) {}
+                saveServerConfig(name, vpnUrl);
                 
                 vpnToConf(vpnUrl).then(function(conf) {
                     var safeName = name.replace(/[^a-z0-9_-]/gi, '_').toLowerCase();
